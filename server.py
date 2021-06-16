@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import socket
 import threading
+import pickle
 
 connections = []
 total_connections = 0
@@ -21,7 +22,7 @@ class Client(threading.Thread):
     def run(self):
         while self.client_signal:
             try:
-                data = self.client_socket.recv(32)
+                data = self.client_socket.recv(2048)
                 if not data:
                     raise Exception("Client sent empty packet. Exiting.")
             except Exception:
@@ -30,7 +31,8 @@ class Client(threading.Thread):
                 connections.remove(self)
                 break
             if data != "":
-                print("ID " + str(self.client_id) + ": " + str(data.decode("utf-8")))
+                print(isinstance(pickle.loads(data),list))
+                print("ID {}: {}".format(self.client_id, pickle.loads(data)))
                 for client in connections:
                     client.client_socket.sendall(data)
 
