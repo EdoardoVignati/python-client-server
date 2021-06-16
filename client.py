@@ -5,6 +5,8 @@ import sys
 from signal import signal, SIGINT
 import pickle
 
+from client_gui import client_gui
+
 exit_event = threading.Event()
 
 
@@ -27,9 +29,13 @@ def receive(connection_socket, sig):
 
 
 if __name__ == "__main__":
+    client_gui()
     signal(SIGINT, quit)
-    host = input("Host: ")
-    port = int(input("Port: "))
+    # host = input("Host: ")
+    # port = int(input("Port: "))
+    host = "localhost"
+    port = 5000
+
     max_tries = 10
 
     try:

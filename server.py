@@ -31,7 +31,7 @@ class Client(threading.Thread):
                 connections.remove(self)
                 break
             if data != "":
-                print(isinstance(pickle.loads(data),list))
+                print(isinstance(pickle.loads(data), list))
                 print("ID {}: {}".format(self.client_id, pickle.loads(data)))
                 for client in connections:
                     client.client_socket.sendall(data)
@@ -48,8 +48,10 @@ def new_connection(new_socket):
 
 
 if __name__ == "__main__":
-    host = input("Host: ")
-    port = int(input("Port: "))
+    # host = input("Host: ")
+    # port = int(input("Port: "))
+    host = "localhost"
+    port = 5000
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
