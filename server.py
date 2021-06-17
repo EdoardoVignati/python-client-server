@@ -4,6 +4,9 @@ import threading
 import pickle
 from tkinter import Tk, Text
 
+host = "localhost"  # input("Host: ")
+port = 5000  # int(input("Port: "))
+
 connections = []
 total_connections = 0
 text = None
@@ -33,8 +36,9 @@ class Client(threading.Thread):
                 connections.remove(self)
                 break
             if data != "":
-                print("ID {}: {}".format(self.client_id, pickle.loads(data)))
-                text.insert("1.0", "ID {}: {}\n".format(self.client_id, pickle.loads(data)))
+                msg_received = "\nID {}: {}".format(self.client_id, pickle.loads(data))
+                print(msg_received)
+                text.insert("1.0", msg_received)
                 for client in connections:
                     client.client_socket.sendall(data)
 
@@ -60,9 +64,6 @@ def server_gui():
 
 
 if __name__ == "__main__":
-    host = "localhost"  # input("Host: ")
-    port = 5000  # int(input("Port: "))
-
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
     sock.listen(5)

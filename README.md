@@ -10,8 +10,25 @@
 
 ## How to use
 
-1) Launch the server
-2) Launch the client
-3) You can send up to 10 arrays from client to server
+- Open a terminal #1 (cmd, shell, bash,...)
+- Start the server via terminal 1 (type: ``python server.py``)
+- Open another terminal #2
+- Start the client via  terminal #2 (type: ``python client.py``)
+- Set some floats (up to 5)
+- Send with the button
 
-You can change host and port in client and server scripts
+You can change host and port in client and server scripts if needed.
+
+Automatically server and clients start on _localhost:5000_
+
+## Libraries used
+
+Python native libraries:
+
+- socket
+- threading
+- pickle (data conversion)
+- tkinter (GUI)
+- signal
+
+References: https://docs.python.org/3/library/index.html
