@@ -6,6 +6,7 @@
 - Send and receive float arrays
 - An _ACK_ is sent to the client
 - The server can manage the attachment or removal of clients at runtime
+- Send data via GUI or via terminal
 
 ## How to use
 

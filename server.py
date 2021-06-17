@@ -2,9 +2,11 @@
 import socket
 import threading
 import pickle
+from tkinter import Tk, Text
 
 connections = []
 total_connections = 0
+text = None
 
 
 class Client(threading.Thread):
@@ -31,8 +33,8 @@ class Client(threading.Thread):
                 connections.remove(self)
                 break
             if data != "":
-                print(isinstance(pickle.loads(data), list))
                 print("ID {}: {}".format(self.client_id, pickle.loads(data)))
+                text.insert("1.0", "ID {}: {}\n".format(self.client_id, pickle.loads(data)))
                 for client in connections:
                     client.client_socket.sendall(data)
 
@@ -47,11 +49,19 @@ def new_connection(new_socket):
         total_connections += 1
 
 
+def server_gui():
+    global text
+    window = Tk()
+    window.title("Server")
+    window.geometry('500x300')
+    text = Text(window, height=10)
+    text.pack()
+    window.mainloop()
+
+
 if __name__ == "__main__":
-    # host = input("Host: ")
-    # port = int(input("Port: "))
-    host = "localhost"
-    port = 5000
+    host = "localhost"  # input("Host: ")
+    port = 5000  # int(input("Port: "))
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
@@ -59,3 +69,5 @@ if __name__ == "__main__":
 
     new_connections_thread = threading.Thread(target=new_connection, args=(sock,))
     new_connections_thread.start()
+
+    server_gui()  # If you remove the gui call, the process runs in terminal
